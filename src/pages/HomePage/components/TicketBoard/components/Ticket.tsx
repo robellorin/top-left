@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { Box, Flex, Avatar, Text } from '@chakra-ui/react'
 import { ITicketBoardCard } from '../TicketBoard.types'
 
@@ -16,7 +18,7 @@ const Ticket = ({ ticket, innerRef, provided }: ITicketBoardCard) => {
     >
       <Flex justifyContent={'space-between'}>
         <Flex flexDirection={'column'}>
-          <Text pt={1.5} fontSize={14}>
+          <Text pt={1.5} fontSize={12}>
             {ticket.title}
           </Text>
           <Text pt={0.5} pb={1} fontSize={10} color='gray.700'>

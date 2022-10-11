@@ -1,5 +1,4 @@
 import { ITicket } from 'src/common/models/Ticket'
-import { TicketBoardColumns } from './TicketBoard.constants'
 import { ITicketColumn } from './TicketBoard.types'
 
 export const getRelatedTickets = (
@@ -15,7 +14,8 @@ export const handleTicketDragEndUtil = (
   draggableId: string,
   source: any,
   destination: any,
-  column: ITicketColumn
+  column: ITicketColumn,
+  columns: ITicketColumn[] | undefined
 ) => {
   // Same column just change ordering of tickets
 
@@ -104,7 +104,7 @@ export const handleTicketDragEndUtil = (
   }
   // Different Columns
   else {
-    const destinationColumn: ITicketColumn = TicketBoardColumns.filter(
+    const destinationColumn: ITicketColumn | undefined = columns?.filter(
       (columnTemp: any) => columnTemp.id.toString() === destination.droppableId
     )[0]
 

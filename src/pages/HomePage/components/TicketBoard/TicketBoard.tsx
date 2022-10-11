@@ -1,25 +1,25 @@
-import { useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from 'react'
 
-import { Box, Flex, Text } from '@chakra-ui/react'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import TicketList from './components/TicketList'
-import {
-  TicketBoardColumns,
-  TickerBoardColumnCards
-} from './TicketBoard.constants'
+import { Flex } from '@chakra-ui/react'
+import { Spinner } from '@chakra-ui/react'
+import { DragDropContext } from 'react-beautiful-dnd'
 
-import {
-  ITicketBoardProps,
-  ITicketColumn,
-  ITicketBoardColumn
-} from './TicketBoard.types'
+import { ITicketBoardProps, ITicketColumn } from './TicketBoard.types'
 
-import { getRelatedTickets, handleTicketDragEndUtil } from './TicketBoard.util'
-import Ticket from './components/Ticket'
-import { ITicket } from 'src/common/models/Ticket'
+import { handleTicketDragEndUtil } from './TicketBoard.util'
 
-const TicketBoard = ({ tickets = [] }: ITicketBoardProps) => {
-  const [cards, setCards] = useState(TickerBoardColumnCards)
+import TicketColumn from './components/TicketColumn'
+
+const TicketBoard = ({ tickets, columns, loading }: ITicketBoardProps) => {
+  const [cards, setCards] = useState(tickets)
+
+  useEffect(() => {
+    if (!loading) {
+      setCards(tickets)
+    }
+  }, [loading])
+
   const handleTicketDragEnd = (result: any) => {
     const { destination, source, draggableId } = result
 
@@ -30,7 +30,7 @@ const TicketBoard = ({ tickets = [] }: ITicketBoardProps) => {
       destination.index === source.index
     )
       return
-    const column: ITicketColumn = TicketBoardColumns.filter(
+    const column: ITicketColumn | undefined = columns?.filter(
       (columnTemp: any) => columnTemp.id.toString() === source.droppableId
     )[0]
 
@@ -42,68 +42,24 @@ const TicketBoard = ({ tickets = [] }: ITicketBoardProps) => {
       draggableId,
       source,
       destination,
-      column
-    )
-  }
-
-  const TicketColumn = ({ column }: ITicketBoardColumn) => {
-    const tickets = getRelatedTickets(column.statuses, cards)
-    return (
-      <Box bg='gray.200' w='25%' color='black' minH={'100vh'} borderRadius={20}>
-        <Box
-          bg='gray.300'
-          w='100%'
-          height={'48px'}
-          py={3}
-          px={2}
-          borderRadius={5}
-        >
-          <Flex justifyContent={'space-between'}>
-            <Text> {column.name} </Text>
-            <Box bg={'gray.600'} w='22px' h='19px' borderRadius={5}>
-              <Flex justifyContent={'center'} alignContent={'center'}>
-                <Text color={'white'} fontSize={12}>
-                  {tickets.length}
-                </Text>
-              </Flex>
-            </Box>
-          </Flex>
-        </Box>
-        <Droppable droppableId={column.id.toString()}>
-          {(provided) => (
-            <TicketList
-              provided={provided}
-              key={column.id.toString()}
-              innerRef={provided.innerRef}
-            >
-              {tickets.map((ticket: ITicket, index: number) => (
-                <Draggable draggableId={ticket.id.toString()} index={index}>
-                  {(provided) => (
-                    <Ticket
-                      provided={provided}
-                      innerRef={provided.innerRef}
-                      key={ticket.id.toString()}
-                      ticket={ticket}
-                    />
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </TicketList>
-          )}
-        </Droppable>
-      </Box>
+      column,
+      columns
     )
   }
 
   return (
     <>
       <Flex color='white' gap={'0.9rem'}>
-        <DragDropContext onDragEnd={handleTicketDragEnd}>
-          {TicketBoardColumns.map((column: ITicketColumn) => (
-            <TicketColumn column={column} key={column.id} />
-          ))}
-        </DragDropContext>
+        {loading ? (
+          <Spinner color='primary' size={'xl'} ml={'45%'} mt={'20%'} />
+        ) : (
+          <DragDropContext onDragEnd={handleTicketDragEnd}>
+            {columns &&
+              columns.map((column: ITicketColumn) => (
+                <TicketColumn column={column} key={column.id} cards={cards} />
+              ))}
+          </DragDropContext>
+        )}
       </Flex>
     </>
   )
