@@ -20,8 +20,11 @@ export interface ITicketBoardCard {
 
 export interface ITicketBoardColumn {
   column: ITicketColumn
+  cards: ITicket[] | undefined
 }
 
 export interface ITicketBoardProps {
-  tickets?: []
+  tickets?: ITicket[]
+  columns?: ITicketColumn[]
+  loading: boolean
 }
