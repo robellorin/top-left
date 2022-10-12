@@ -36,13 +36,28 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Activities', icon: FiStar }
 ]
 
-export default function Sidebar({ children = null }: { children: ReactNode }) {
+const FooterItems: Array<LinkItemProps> = [
+  { name: 'Help', icon: FiHome },
+  { name: 'Settings', icon: FiTrendingUp }
+]
+
+export default function Sidebar({
+  children = null,
+  selected,
+  setSelected
+}: {
+  children: ReactNode
+  selected: number
+  setSelected: React.Dispatch<React.SetStateAction<number>>
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <Box minH='100vh' bg={useColorModeValue('white', 'gray.900')}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: 'none', md: 'block' }}
+        selected={selected}
+        setSelected={setSelected}
       />
       <Drawer
         autoFocus={false}
@@ -54,7 +69,11 @@ export default function Sidebar({ children = null }: { children: ReactNode }) {
         size='full'
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent
+            onClose={onClose}
+            selected={selected}
+            setSelected={setSelected}
+          />
         </DrawerContent>
       </Drawer>
       <MobileNav onOpen={onOpen} />
@@ -67,7 +86,12 @@ export default function Sidebar({ children = null }: { children: ReactNode }) {
   )
 }
 
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+const SidebarContent = ({
+  onClose,
+  selected,
+  setSelected,
+  ...rest
+}: SidebarProps) => {
   return (
     <Box
       transition='3s ease'
@@ -83,24 +107,60 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <Logo />
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
-          {link.name}
-        </NavItem>
-      ))}
+      <Flex
+        flexDirection={'column'}
+        justifyContent={'space-between'}
+        gap={'41rem'}
+      >
+        <Box>
+          {LinkItems.map((link, index: number) => (
+            <NavItem
+              key={link.name}
+              icon={link.icon}
+              isSelected={selected === index}
+              index={index}
+              setSelected={setSelected}
+            >
+              {link.name}
+            </NavItem>
+          ))}
+        </Box>
+        <Box>
+          {FooterItems.map((link, index: number) => (
+            <NavItem
+              key={link.name}
+              icon={link.icon}
+              isSelected={selected === index + 4}
+              index={index + 4}
+              setSelected={setSelected}
+            >
+              {link.name}
+            </NavItem>
+          ))}
+        </Box>
+      </Flex>
     </Box>
   )
 }
 
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({
+  icon,
+  children,
+  isSelected,
+  setSelected,
+  index,
+  ...rest
+}: NavItemProps) => {
   return (
     <Link
       href='#'
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}
+      onClick={() => setSelected(index)}
     >
       <Flex
         align='center'
+        bg={isSelected ? 'blue.600' : ''}
         p='4'
         mx='4'
         borderRadius='lg'
@@ -108,7 +168,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
         cursor='pointer'
         color={'white'}
         _hover={{
-          bg: 'cyan.400',
+          bg: 'blue.400',
           color: 'white'
         }}
         {...rest}

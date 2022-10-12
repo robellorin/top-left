@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react'
 
-import { Flex } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/react'
 import { DragDropContext } from 'react-beautiful-dnd'
 
@@ -49,18 +49,20 @@ const TicketBoard = ({ tickets, columns, loading }: ITicketBoardProps) => {
 
   return (
     <>
-      <Flex color='white' gap={'0.9rem'}>
-        {loading ? (
-          <Spinner color='primary' size={'xl'} ml={'45%'} mt={'20%'} />
-        ) : (
-          <DragDropContext onDragEnd={handleTicketDragEnd}>
-            {columns &&
-              columns.map((column: ITicketColumn) => (
-                <TicketColumn column={column} key={column.id} cards={cards} />
-              ))}
-          </DragDropContext>
-        )}
-      </Flex>
+      <Box overflowX={'auto'}>
+        <Flex color='white' gap={'0.9rem'}>
+          {loading ? (
+            <Spinner color='primary' size={'xl'} ml={'45%'} mt={'20%'} />
+          ) : (
+            <DragDropContext onDragEnd={handleTicketDragEnd}>
+              {columns &&
+                columns.map((column: ITicketColumn) => (
+                  <TicketColumn column={column} key={column.id} cards={cards} />
+                ))}
+            </DragDropContext>
+          )}
+        </Flex>
+      </Box>
     </>
   )
 }

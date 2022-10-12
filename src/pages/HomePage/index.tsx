@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import Sidebar from 'src/common/components/Sidebar/Sidebar'
 import useGetBoard from 'src/hooks/useGetBoard'
 import TicketBoard from './components/TicketBoard/TicketBoard'
 
 const HomePage = () => {
   const { data, loading } = useGetBoard()
+  const [selected, setSelected] = useState(0)
 
   const getSidebarChildren = () => [
     <TicketBoard
@@ -15,7 +17,11 @@ const HomePage = () => {
 
   return (
     <>
-      <Sidebar children={getSidebarChildren()} />
+      <Sidebar
+        children={getSidebarChildren()}
+        selected={selected}
+        setSelected={setSelected}
+      />
     </>
   )
 }

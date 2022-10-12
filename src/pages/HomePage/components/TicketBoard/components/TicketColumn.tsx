@@ -9,25 +9,33 @@ import TicketList from './TicketList'
 const TicketColumn = ({ column, cards }: ITicketBoardColumn) => {
   const tickets = getRelatedTickets(column.statuses, cards ?? [])
   return (
-    <Box bg='gray.200' w='25%' color='black' minH={'100vh'} borderRadius={20}>
-      <Box
-        bg='gray.300'
-        w='100%'
-        height={'48px'}
-        py={3}
-        px={2}
-        borderRadius={5}
-      >
-        <Flex justifyContent={'space-between'}>
-          <Text> {column.name} </Text>
-          <Box bg={'gray.600'} w='22px' h='19px' borderRadius={5}>
-            <Flex justifyContent={'center'} alignContent={'center'}>
-              <Text color={'white'} fontSize={12}>
-                {tickets.length}
-              </Text>
-            </Flex>
-          </Box>
-        </Flex>
+    <Box
+      bg='gray.200'
+      minW='305px'
+      color='black'
+      minH={'100vh'}
+      borderRadius={13}
+    >
+      <Box padding={'2.5px'} paddingBottom={0}>
+        <Box
+          bg='gray.300'
+          w='100%'
+          height={'48px'}
+          py={3}
+          px={2}
+          borderRadius={'10px 10px 0px 0px'}
+        >
+          <Flex justifyContent={'space-between'}>
+            <Text> {column.name} </Text>
+            <Box bg={'gray.600'} w='22px' h='19px' borderRadius={5}>
+              <Flex justifyContent={'center'} alignContent={'center'}>
+                <Text color={'white'} fontSize={12}>
+                  {tickets.length}
+                </Text>
+              </Flex>
+            </Box>
+          </Flex>
+        </Box>
       </Box>
       <Droppable droppableId={column.id.toString()}>
         {(provided, snapshot) => (

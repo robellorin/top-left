@@ -4,6 +4,33 @@ import { Box, Flex, Avatar, Text } from '@chakra-ui/react'
 import { ITicketBoardCard } from '../TicketBoard.types'
 
 const Ticket = ({ ticket, innerRef, provided }: ITicketBoardCard) => {
+  const getPriorityColor = (priority: string, type: number) => {
+    const priorityNumber = priority.split(' ')[1]
+    let color = ''
+    if (type === 1) {
+      if (priorityNumber === '1') {
+        color = 'red.300'
+      } else if (priorityNumber === '2') {
+        color = 'yellow.300'
+      } else if (priorityNumber === '3') {
+        color = 'green.400'
+      } else if (priorityNumber === '4') {
+        color = 'blue.200'
+      }
+    } else {
+      if (priorityNumber === '1') {
+        color = 'red.700'
+      } else if (priorityNumber === '2') {
+        color = 'yellow.800'
+      } else if (priorityNumber === '3') {
+        color = 'green.800'
+      } else if (priorityNumber === '4') {
+        color = 'blue.800'
+      }
+    }
+    return color
+  }
+
   return (
     <Box
       ref={innerRef}
@@ -21,15 +48,30 @@ const Ticket = ({ ticket, innerRef, provided }: ITicketBoardCard) => {
           <Text pt={1.5} fontSize={12}>
             {ticket.title}
           </Text>
-          <Text pt={0.5} pb={1} fontSize={10} color='gray.700'>
-            {ticket.company}
-          </Text>
-          <Avatar
-            size={'sm'}
-            src={
-              'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-            }
-          />
+          <Box pt={0.5} pb={1}>
+            <Flex>
+              <Text fontSize={10} color='gray.700'>
+                {ticket.company}
+                {ticket.id % 4 === 0 && ',Twitter'}
+              </Text>
+            </Flex>
+          </Box>
+          <Flex>
+            <Avatar
+              size={'sm'}
+              src={
+                'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+              }
+            />
+            {ticket.id % 4 === 0 && (
+              <Avatar
+                size={'sm'}
+                src={
+                  'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                }
+              />
+            )}
+          </Flex>
           <Text pt={3} color='gray.700' fontSize={9}>
             Status name for x week
           </Text>
@@ -41,7 +83,7 @@ const Ticket = ({ ticket, innerRef, provided }: ITicketBoardCard) => {
           <Box position={'relative'}>
             <Box
               h='22px'
-              bg='blue.200'
+              bg={getPriorityColor(ticket.priority, 1)}
               top={'-20px'}
               right={'2px'}
               width={'74px'}
@@ -53,7 +95,8 @@ const Ticket = ({ ticket, innerRef, provided }: ITicketBoardCard) => {
                 fontSize={10}
                 textAlign='center'
                 pt={1}
-                color={'blue.800'}
+                color={getPriorityColor(ticket.priority, 2)}
+                fontWeight={500}
               >
                 {ticket.priority}
               </Text>
