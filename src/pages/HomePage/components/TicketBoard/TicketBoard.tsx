@@ -49,7 +49,7 @@ const TicketBoard = ({ tickets, columns, loading }: ITicketBoardProps) => {
 
   return (
     <>
-      <Box overflowX={'auto'}>
+      <Box>
         <Flex color='white' gap={'0.9rem'}>
           {loading ? (
             <Spinner color='primary' size={'xl'} ml={'45%'} mt={'20%'} />

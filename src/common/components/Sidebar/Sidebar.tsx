@@ -15,7 +15,9 @@ import {
   FlexProps,
   Menu,
   MenuButton,
-  Input
+  Input,
+  InputGroup,
+  InputLeftElement
 } from '@chakra-ui/react'
 import {
   FiHome,
@@ -25,6 +27,7 @@ import {
   //   FiSettings,
   FiMenu
 } from 'react-icons/fi'
+import { Search2Icon } from '@chakra-ui/icons'
 
 import { LinkItemProps, NavItemProps, SidebarProps } from './Sidebar.types'
 import Logo from 'src/assets/icons/logo'
@@ -78,7 +81,13 @@ export default function Sidebar({
       </Drawer>
       <MobileNav onOpen={onOpen} />
       {children && (
-        <Box ml={{ base: 0, md: 60 }} p='4' bg={'white'}>
+        <Box
+          ml={{ base: 0, md: 60 }}
+          p='4'
+          bg={'white'}
+          overflow='auto'
+          height={'92vh'}
+        >
           {children}
         </Box>
       )}
@@ -217,7 +226,13 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         <Logo />
 
         <HStack spacing={{ base: '0', md: '6' }}>
-          <Input placeholder='Search' />
+          <InputGroup>
+            <InputLeftElement
+              pointerEvents='none'
+              children={<Search2Icon color='gray.600' />}
+            />
+            <Input type='text' placeholder='Search' size={'md'} />
+          </InputGroup>
           <Flex alignItems={'center'}>
             <Menu>
               <MenuButton
