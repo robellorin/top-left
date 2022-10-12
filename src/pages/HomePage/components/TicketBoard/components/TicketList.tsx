@@ -7,6 +7,7 @@ const TicketList = ({ children, innerRef, provided }: ITicketList) => {
     <>
       <Box
         px={3}
+        py={3}
         ref={innerRef}
         minHeight={'100vh'}
         {...provided.droppableProps}
