@@ -216,16 +216,12 @@ const MobileNav = ({ onOpen, boardName, ...rest }: MobileProps) => {
         bg={useColorModeValue('white', 'gray.900')}
         borderBottomWidth='1px'
         borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-        justifyContent={{ base: 'space-between', md: 'flex-end' }}
+        //justifyContent={{ base: 'space-between', md: 'flex-end' }}
         pos="relative"
         {...rest}
       >
-        <Text 
-          position="absolute"
-          fontWeight="bold"
-          fontSize="20px"
-          left="20px"
-        >{boardName}</Text>
+        
+        
 
         <IconButton
           display={{ base: 'flex', md: 'none' }}
@@ -235,6 +231,14 @@ const MobileNav = ({ onOpen, boardName, ...rest }: MobileProps) => {
           icon={<FiMenu />}
         />
 
+        <Flex flex={2}>
+          <Text 
+            fontWeight="bold"
+            fontSize="20px"
+            whiteSpace="nowrap"
+          >{boardName}</Text>
+          </Flex>
+        <Flex justifyContent="flex-end" flex={7}>
         <Logo />
 
         <HStack spacing={{ base: '0', md: '6' }}>
@@ -288,6 +292,7 @@ const MobileNav = ({ onOpen, boardName, ...rest }: MobileProps) => {
             </Menu>
           </Flex>
         </HStack>
+        </Flex>
       </Flex>
     </>
   )
