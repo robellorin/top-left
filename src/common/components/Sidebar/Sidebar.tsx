@@ -217,12 +217,9 @@ const MobileNav = ({ onOpen, boardName, ...rest }: MobileProps) => {
         borderBottomWidth='1px'
         borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
         //justifyContent={{ base: 'space-between', md: 'flex-end' }}
-        pos="relative"
+        pos='relative'
         {...rest}
       >
-        
-        
-
         <IconButton
           display={{ base: 'flex', md: 'none' }}
           onClick={onOpen}
@@ -231,39 +228,37 @@ const MobileNav = ({ onOpen, boardName, ...rest }: MobileProps) => {
           icon={<FiMenu />}
         />
 
-        <Flex flex={2}>
-          <Text 
-            fontWeight="bold"
-            fontSize="20px"
-            whiteSpace="nowrap"
-          >{boardName}</Text>
-          </Flex>
-        <Flex justifyContent="flex-end" flex={7}>
-        <Logo />
+        <Flex flex={2} ml={{ lg: 0, md: 0, sm: 3 }}>
+          <Text fontWeight='bold' fontSize='20px' whiteSpace='nowrap'>
+            {boardName}
+          </Text>
+        </Flex>
+        <Flex justifyContent='flex-end' flex={7}>
+          <Logo />
 
-        <HStack spacing={{ base: '0', md: '6' }}>
-          <InputGroup>
-            <InputLeftElement
-              pointerEvents='none'
-              children={<Search2Icon color='gray.600' />}
-            />
-            <Input type='text' placeholder='Search' size={'md'} />
-          </InputGroup>
-          <Flex alignItems={'center'}>
-            <Menu>
-              <MenuButton
-                py={2}
-                transition='all 0.3s'
-                _focus={{ boxShadow: 'none' }}
-              >
-                <HStack>
-                  <Avatar
-                    size={'sm'}
-                    src={
-                      'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                    }
-                  />
-                  {/* <VStack
+          <HStack spacing={{ base: '0', md: '6' }}>
+            <InputGroup>
+              <InputLeftElement
+                pointerEvents='none'
+                children={<Search2Icon color='gray.600' />}
+              />
+              <Input type='text' placeholder='Search' size={'md'} />
+            </InputGroup>
+            <Flex alignItems={'center'}>
+              <Menu>
+                <MenuButton
+                  py={2}
+                  transition='all 0.3s'
+                  _focus={{ boxShadow: 'none' }}
+                >
+                  <HStack>
+                    <Avatar
+                      size={'sm'}
+                      src={
+                        'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                      }
+                    />
+                    {/* <VStack
                   display={{ base: 'none', md: 'flex' }}
                   alignItems='flex-start'
                   spacing='1px'
@@ -277,9 +272,9 @@ const MobileNav = ({ onOpen, boardName, ...rest }: MobileProps) => {
                 <Box display={{ base: 'none', md: 'flex' }}>
                   <FiChevronDown />
                 </Box> */}
-                </HStack>
-              </MenuButton>
-              {/* <MenuList
+                  </HStack>
+                </MenuButton>
+                {/* <MenuList
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}
             >
@@ -289,9 +284,9 @@ const MobileNav = ({ onOpen, boardName, ...rest }: MobileProps) => {
               <MenuDivider />
               <MenuItem>Sign out</MenuItem>
             </MenuList> */}
-            </Menu>
-          </Flex>
-        </HStack>
+              </Menu>
+            </Flex>
+          </HStack>
         </Flex>
       </Flex>
     </>
