@@ -17,7 +17,8 @@ import {
   MenuButton,
   Input,
   InputGroup,
-  InputLeftElement
+  InputLeftElement,
+  Text
 } from '@chakra-ui/react'
 import {
   FiHome,
@@ -47,11 +48,13 @@ const FooterItems: Array<LinkItemProps> = [
 export default function Sidebar({
   children = null,
   selected,
-  setSelected
+  setSelected,
+  boardName
 }: {
   children: ReactNode
   selected: number
   setSelected: React.Dispatch<React.SetStateAction<number>>
+  boardName: string | undefined
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
@@ -79,7 +82,7 @@ export default function Sidebar({
           />
         </DrawerContent>
       </Drawer>
-      <MobileNav onOpen={onOpen} />
+      <MobileNav boardName={boardName} onOpen={onOpen} />
       {children && (
         <Box
           ml={{ base: 0, md: 60 }}
@@ -200,8 +203,9 @@ const NavItem = ({
 
 interface MobileProps extends FlexProps {
   onOpen: () => void
+  boardName: string | undefined
 }
-const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+const MobileNav = ({ onOpen, boardName, ...rest }: MobileProps) => {
   return (
     <>
       <Flex
@@ -213,8 +217,16 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         borderBottomWidth='1px'
         borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
         justifyContent={{ base: 'space-between', md: 'flex-end' }}
+        pos="relative"
         {...rest}
       >
+        <Text 
+          position="absolute"
+          fontWeight="bold"
+          fontSize="20px"
+          left="20px"
+        >{boardName}</Text>
+
         <IconButton
           display={{ base: 'flex', md: 'none' }}
           onClick={onOpen}

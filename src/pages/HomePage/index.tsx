@@ -21,6 +21,7 @@ const HomePage = () => {
         children={getSidebarChildren()}
         selected={selected}
         setSelected={setSelected}
+        boardName={data?.board}
       />
     </>
   )

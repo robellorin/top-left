@@ -32,7 +32,7 @@ const Ticket = ({ ticket, innerRef, provided }: ITicketBoardCard) => {
   }
 
   return (
-    <Box
+    <Flex
       ref={innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
@@ -40,26 +40,38 @@ const Ticket = ({ ticket, innerRef, provided }: ITicketBoardCard) => {
       w='100%'
       h='122px'
       px={2}
+      flexDir="column"
       borderRadius={10}
       key={ticket.id.toString()}
     >
-      <Flex justifyContent={'space-between'}>
-        <Flex flexDirection={'column'}>
+      <Flex
+        flex={0.3}
+        w="100%"
+        flexDir="row"
+        justifyContent="space-between"
+      >
+        <Flex flexDir="column">
           <Text pt={1.5} fontSize={12}>
             {ticket.title}
           </Text>
-          <Box pt={0.5} pb={1}>
-            <Flex>
-              <Text fontSize={10} color='gray.700'>
-                {ticket.company}
-                {ticket.id % 4 === 0 && ',Twitter'}
-              </Text>
-            </Flex>
-          </Box>
-          <Flex>
-            <Avatar
-              size={'xs'}
-              src={
+          <Text fontSize={10} color='gray.700'>
+            {ticket.company}
+            {ticket.id % 4 === 0 && ',Twitter'}
+          </Text>
+        </Flex>
+        <Text pt={2.5} color='gray.700' fontSize={12}>
+          $452
+        </Text>
+      </Flex>
+      <Flex
+        flex={0.3}
+        w="100%"
+        flexDir="row"
+        alignItems="center"
+      >
+        <Avatar
+          size={'xs'}
+            src={
                 'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
               }
             />
@@ -71,24 +83,23 @@ const Ticket = ({ ticket, innerRef, provided }: ITicketBoardCard) => {
                 }
               />
             )}
-          </Flex>
-          <Text pt={3} color='gray.700' fontSize={9}>
+      </Flex>
+      <Flex
+        flex={0.3}
+        w="100%"
+        flexDir="row"
+        alignItems="flex-end"
+        justifyContent="space-between"
+      >
+        <Text pt={3} color='gray.700' fontSize={9}>
             Status name for x week
           </Text>
-        </Flex>
-        <Flex flexDirection={'column'} justifyContent='space-between'>
-          <Text pt={2.5} color='gray.700' fontSize={12}>
-            $452
-          </Text>
-          <Box position={'relative'}>
+          <Box>
             <Box
               h='22px'
               bg={getPriorityColor(ticket.priority, 1)}
-              top={'-20px'}
-              right={'2px'}
               width={'74px'}
               borderRadius={10}
-              position={'absolute'}
             >
               <Text
                 sx={{ wordWrap: 'normal' }}
@@ -102,9 +113,8 @@ const Ticket = ({ ticket, innerRef, provided }: ITicketBoardCard) => {
               </Text>
             </Box>
           </Box>
-        </Flex>
       </Flex>
-    </Box>
+    </Flex>
   )
 }
 
